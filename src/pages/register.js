@@ -1,59 +1,115 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState } from 'react';
+import axios from 'axios';
+import "bootstrap/dist/css/bootstrap.css";
+import "../pages/styles/Register.css";
+import { useNavigate } from 'react-router-dom';  // Import useNavigate
 
-const Register = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    number: "",
-    email: "",
-    gender: "",
-    roles: ""
-  });
+function Register() {
+    const [name, setName] = useState('');
+       const [email, setEmail] = useState('');
+       const [number, setNumber] = useState('');
+       const [adress, setAdress] = useState('');
+        
+    const navigate = useNavigate();  // Initialize navigate
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post("http://localhost:5030/api/auth/register", formData);
-      console.log("Inscription réussie :", response.data);
-    } catch (error) {
-      console.error("Erreur lors de l'inscription :", error);
-    }
-  };
+        const userData = {
+          name,
+          email,
+          number,
+          adress
+      };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <label>Nom :</label>
-      <input type="text" name="name" value={formData.name} onChange={handleChange} required />
+        try {
+            const response = await axios.post('http://localhost:5030/api/auth/register', userData, {
+                headers: {
+                     'Content-Type': 'application/json'
+                }
+            })  
+            console.log(response.data);
 
-      <label>Numéro :</label>
-      <input type="text" name="number" value={formData.number} onChange={handleChange} required />
+            // Navigate to profile page on success
+            navigate('/login');
+            
+            // Optionally reload the page
+            window.location.reload();
+        } catch (error) {
+            console.error('Registration failed', error);
+        }
+    };
 
-      <label>Email :</label>
-      <input type="email" name="email" value={formData.email} onChange={handleChange} required />
-
-      <label>Genre :</label>
-      <select name="gender" value={formData.gender} onChange={handleChange} required>
-        <option value="">Sélectionner</option>
-        <option value="male">Homme</option>
-        <option value="female">Femme</option>
-        <option value="other">Autre</option>
-      </select>
-
-      <label>Rôle :</label>
-      <select name="roles" value={formData.roles} onChange={handleChange} required>
-        <option value="">Sélectionner</option>
-        <option value="user">Utilisateur</option>
-        <option value="admin">Administrateur</option>
-        <option value="moderator">Modérateur</option>
-      </select>
-
-      <button type="submit">S'inscrire</button>
+    return (
+        <>
+<div className='container '>
+<div className='row'>
+       <div className='col-lg-9 col-sm-12 text-center bg-primary-subtle ps-5 pe-5 pb-5' >
+    <div className='col-12'>
+             
+        <form onSubmit={handleSubmit} className='row position-form mt-2'>
+            
+        <h2 className='line pt-4'>Register</h2>
+            <div className='col-lg-4 col-sm-12'>
+                <input
+                    type="text"
+                    placeholder="Name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className='form-control mt-3'
+                />
+                  </div>
+             
+                             
+                    <div className='col-lg-8 col-sm-12'>
+                <input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                     className='form-control mt-3'
+                />
+                </div>
+                <div className='col-lg-8 col-sm-12'>
+                <input
+                    type="number"
+                    placeholder="Number"
+                    value={number}
+                    onChange={(e) => setNumber(e.target.value)}
+                     className='form-control mt-3'
+                />
+                </div>
+                <div className='col-lg-8 col-sm-12'>
+                <input
+                    type="text"
+                    placeholder="Adress"
+                    value={adress}
+                    onChange={(e) => setAdress(e.target.value)}
+                     className='form-control mt-3'
+                />
+                </div>
+   
+    
+    <div className='col-lg-12 col-sm-12 text-center push-register pt-4 mt-2'>
+    <button type="submit" className=' btn btn-primary push'>Register</button>
+    </div>
     </form>
-  );
-};
+    </div>
+
+    </div>
+</div>
+
+  </div>
+       
+
+        
+        </>
+       
+
+
+
+    );
+}
+
 
 export default Register;

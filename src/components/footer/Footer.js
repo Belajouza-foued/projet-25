@@ -1,15 +1,15 @@
 import React from 'react';
 import {  Outlet } from 'react-router-dom';
 
-const Navbar = () => {
+const Footer = () => {
     return (
        
         <>
          <div>
   <ul className="d-flex justify-content-between">
-            <li>formation</li>
-            <li>produit</li>
-            <li>materielle</li>
+            <li>source</li>
+            <li>liens</li>
+            <li>email</li>
         </ul>
         </div>
         <Outlet/>
@@ -18,4 +18,4 @@ const Navbar = () => {
         
     )
 }
-export default Navbar;
+export default Footer;
