@@ -12,6 +12,7 @@ import { useLocation } from 'react-router-dom';
 import Profile from './pages/Profile';
 import Produit from './pages/Produit';
 import AddProduit from './pages/AddProduit';
+import EditProduit from './pages/EditProduit';
 
 export default function App(){
   const location = useLocation();
@@ -29,6 +30,7 @@ export default function App(){
 <Route path="/profile" element={<Profile/>} />
 <Route path="/produit" element={<Produit/>} />
 <Route path="/addProduit" element={<AddProduit/>} />
+<Route path="/editProduit" element={<EditProduit/>} />
 
    </Routes>
    {!hideNavbarFooter && <Footer />}
